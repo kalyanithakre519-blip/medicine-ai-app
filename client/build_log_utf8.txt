@@ -1,0 +1,114 @@
+﻿
+> client@0.0.0 build
+> vite build
+
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 147 modules transformed.
+node.exe : [31mΓ£ù[39m 
+Build failed in 1.69s
+At C:\Program 
+Files\nodejs\npm.ps1:29 
+char:3
++   & $NODE_EXE $NPM_CLI_JS 
+$args
++   ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo          
+    : NotSpecified: ([31m  
+  Γ£ù[39m Build failed i   
+ n 1.69s:String) [], Rem    
+oteException
+    + FullyQualifiedErrorId 
+    : NativeCommandError
+ 
+[31merror during build:
+[31msrc/pages/HealthAdvisor
+.jsx (4:50): "FaYoga" is 
+not exported by "node_module
+s/react-icons/fa/index.mjs",
+ imported by "src/pages/Heal
+thAdvisor.jsx".[31m
+file: 
+[36mC:/Users/ishwa/aiml 
+enable medicine management s
+ystem/client/src/pages/Healt
+hAdvisor.jsx:4:50[31m
+[33m
+2: import axios from 
+'axios';
+3: import {
+4:     FaHeartbeat, 
+FaSearch, FaAppleAlt, 
+FaRunning, FaYoga,
+                            
+                         ^
+5:     FaLightbulb, 
+FaArrowLeft, FaShieldAlt, 
+FaInfoCircle,
+6:     FaDna, FaLeaf
+[31m
+    at getRollupError (file:
+///C:/Users/ishwa/aiml%20ena
+ble%20medicine%20management%
+20system/client/node_modules
+/rollup/dist/es/shared/parse
+Ast.js:402:41)
+    at error (file:///C:/Use
+rs/ishwa/aiml%20enable%20med
+icine%20management%20system/
+client/node_modules/rollup/d
+ist/es/shared/parseAst.js:39
+8:42)
+    at Module.error (file://
+/C:/Users/ishwa/aiml%20enabl
+e%20medicine%20management%20
+system/client/node_modules/r
+ollup/dist/es/shared/node-en
+try.js:17040:16)
+    at Module.traceVariable 
+(file:///C:/Users/ishwa/aiml
+%20enable%20medicine%20manag
+ement%20system/client/node_m
+odules/rollup/dist/es/shared
+/node-entry.js:17452:29)
+    at 
+ModuleScope.findVariable (fi
+le:///C:/Users/ishwa/aiml%20
+enable%20medicine%20manageme
+nt%20system/client/node_modu
+les/rollup/dist/es/shared/no
+de-entry.js:15070:39)
+    at ReturnValueScope.find
+Variable (file:///C:/Users/i
+shwa/aiml%20enable%20medicin
+e%20management%20system/clie
+nt/node_modules/rollup/dist/
+es/shared/node-entry.js:5673
+:38)
+    at FunctionBodyScope.fin
+dVariable (file:///C:/Users/
+ishwa/aiml%20enable%20medici
+ne%20management%20system/cli
+ent/node_modules/rollup/dist
+/es/shared/node-entry.js:567
+3:38)
+    at Identifier.bind (file
+:///C:/Users/ishwa/aiml%20en
+able%20medicine%20management
+%20system/client/node_module
+s/rollup/dist/es/shared/node
+-entry.js:5447:40)
+    at CallExpression.bind (
+file:///C:/Users/ishwa/aiml%
+20enable%20medicine%20manage
+ment%20system/client/node_mo
+dules/rollup/dist/es/shared/
+node-entry.js:2825:28)
+    at CallExpression.bind (
+file:///C:/Users/ishwa/aiml%
+20enable%20medicine%20manage
+ment%20system/client/node_mo
+dules/rollup/dist/es/shared/
+node-entry.js:12179:15)[39m
+

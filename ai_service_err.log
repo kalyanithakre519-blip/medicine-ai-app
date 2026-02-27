@@ -1,0 +1,40 @@
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://10.240.58.17:5001
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 162-903-795
+ * Detected change in 'C:\\Users\\ishwa\\aiml enable medicine management system\\ai_service\\app.py', reloading
+Exception in thread Thread-1 (serve_forever):
+Traceback (most recent call last):
+  File "C:\Users\ishwa\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 1041, in _bootstrap_inner
+    self.run()
+    ~~~~~~~~^^
+  File "C:\Users\ishwa\AppData\Local\Programs\Python\Python313\Lib\threading.py", line 992, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ishwa\AppData\Local\Programs\Python\Python313\Lib\site-packages\werkzeug\serving.py", line 819, in serve_forever
+    super().serve_forever(poll_interval=poll_interval)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ishwa\AppData\Local\Programs\Python\Python313\Lib\socketserver.py", line 235, in serve_forever
+    ready = selector.select(poll_interval)
+  File "C:\Users\ishwa\AppData\Local\Programs\Python\Python313\Lib\selectors.py", line 314, in select
+    r, w, _ = self._select(self._readers, self._writers, [], timeout)
+              ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ishwa\AppData\Local\Programs\Python\Python313\Lib\selectors.py", line 305, in _select
+    r, w, x = select.select(r, w, w, timeout)
+              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 162-903-795
+127.0.0.1 - - [22/Feb/2026 19:22:56] "GET /api/stats/sales HTTP/1.1" 200 -
+127.0.0.1 - - [22/Feb/2026 19:22:56] "GET /api/stats/top-products HTTP/1.1" 200 -
+127.0.0.1 - - [22/Feb/2026 19:23:00] "GET /api/stats/forecast HTTP/1.1" 200 -
+127.0.0.1 - - [22/Feb/2026 19:23:28] "GET /api/stats/sales HTTP/1.1" 200 -
+127.0.0.1 - - [22/Feb/2026 19:23:28] "GET /api/stats/top-products HTTP/1.1" 200 -
+127.0.0.1 - - [22/Feb/2026 19:23:30] "GET /api/stats/forecast HTTP/1.1" 200 -
+127.0.0.1 - - [22/Feb/2026 19:23:31] "GET /api/stats/expiry-risk HTTP/1.1" 200 -
+127.0.0.1 - - [22/Feb/2026 19:23:34] "GET /api/predict-refills HTTP/1.1" 200 -

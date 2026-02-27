@@ -1,0 +1,9 @@
+flask
+flask-cors
+pymongo
+pandas
+python-dotenv
+statsmodels
+scikit-learn
+fpdf
+requests

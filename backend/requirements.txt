@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pymongo
+motor
+pydantic[email]
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+pandas
+python-dotenv
+scikit-learn
+statsmodels
+fpdf
+Pillow
+pytesseract
+numpy

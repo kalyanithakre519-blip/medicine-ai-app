@@ -1,0 +1,19 @@
+{
+  "name": "aiml-medicine-management-system",
+  "version": "1.0.0",
+  "description": "AI/ML Enabled Medicine Management System",
+  "main": "index.js",
+  "scripts": {
+    "backend": "cd backend && uvicorn main:app --reload --port 8000",
+    "ai-service": "cd ai_service && python app.py",
+    "client": "npm run dev --prefix client",
+    "prestart": "python SYSTEM_CORE_SETUP.py",
+    "start": "concurrently \"npm run backend\" \"npm run ai-service\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.0.0"
+  }
+}

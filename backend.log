@@ -1,0 +1,10 @@
+ INFO:     127.0.0.1:60473 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61938 - "POST /api/auth/login HTTP/1.1" 200 OK
+DEBUG: get_medicines called by user: kalyanithakre519@gmail.com
+INFO:     127.0.0.1:61943 - "GET /api/medicines HTTP/1.1" 200 OK
+DEBUG: get_medicines called by user: kalyanithakre519@gmail.com
+INFO:     127.0.0.1:63484 - "GET /api/medicines HTTP/1.1" 200 OK
+DEBUG: get_medicines called by user: kalyanithakre519@gmail.com
+INFO:     127.0.0.1:59296 - "GET /api/medicines HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59409 - "GET /api/suppliers HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59736 - "GET /api/suppliers HTTP/1.1" 200 OK
