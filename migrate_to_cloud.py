@@ -9,7 +9,7 @@ async def migrate():
     local_uri = "mongodb://127.0.0.1:27017"
     
     # User inputs cloud URI
-    cloud_uri = input("\nPlease paste your COMPLETE Cloud MongoDB Link (with your password instead of <db_password>):\n> ").strip()
+    cloud_uri = "mongodb+srv://kalyanithakre519:student9644@cluster0sa.x87ff.mongodb.net/?appName=Cluster0sa"
     
     if "<db_password>" in cloud_uri:
         print("❌ Error: Aapne <db_password> ko apne asali password se replace nahi kiya hai. Kripya wapas run karein.")

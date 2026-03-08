@@ -29,7 +29,8 @@ app.include_router(patients.router, prefix="/api/patients", tags=["Patients"])
 @app.on_event("startup")
 async def startup_db_client():
     from pymongo import MongoClient
-    mongo_uri = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017")
+    import re
+    mongo_uri = re.sub(r'[\x00-\x20\x7F-\x9F]', '', os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017"))
     try:
         client = MongoClient(mongo_uri, serverSelectionTimeoutMS=2000)
         client.server_info()

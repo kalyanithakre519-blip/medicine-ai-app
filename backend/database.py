@@ -4,7 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017")
+import re
+MONGO_URI = re.sub(r'[\x00-\x20\x7F-\x9F]', '', os.getenv("MONGO_URI", "mongodb://127.0.0.1:27017"))
 DB_NAME = "medicine_management"
 
 client = AsyncIOMotorClient(MONGO_URI)
