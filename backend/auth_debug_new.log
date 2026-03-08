@@ -6872,3 +6872,519 @@ Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
 Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
 Found user by ID: 6997f913d3448c608cbebef7
 SUCCESS: Authentication complete
+
+[2026-02-27 13:01:32.369544] LOGIN ATTEMPT: kalyanithakre519@gmail.com
+RESULT: Password valid = True
+SUCCESS: Token generated
+
+[2026-02-27 13:01:32.574543] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:01:33.080308] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:01:34.529451] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:01:34.552383] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:02:21.972619] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:02:21.999341] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:12:54.110908] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:12:54.146632] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:13:15.640838] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:13:15.644537] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:13:15.690891] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:13:15.704695] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:04.916203] LOGIN ATTEMPT: kalyanithakre519@gmail.com
+RESULT: Password valid = True
+SUCCESS: Token generated
+
+[2026-02-27 13:38:05.100801] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:05.129688] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:10.583632] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:10.585275] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:10.604082] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:10.611660] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:18.621705] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:18.652841] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:20.334809] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:20.366055] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:34.222808] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:38:34.250666] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:39:30.024080] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:39:30.048267] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:39:48.784835] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:39:48.787928] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:39:48.802626] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:39:48.818114] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:40:37.151408] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:40:37.178614] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:11.753594] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:11.755964] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:11.783455] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:11.790902] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:12.635120] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:12.662148] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:14.240662] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:14.244849] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:14.270650] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:41:14.278870] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:44:20.847423] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:44:20.875979] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:45:35.493578] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:45:35.521509] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:45:37.214607] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:45:37.246061] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:45:38.420064] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:45:38.446571] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:46:31.932366] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:46:31.988191] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:46:32.014824] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:46:42.993637] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-02-27 13:46:43.023007] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:19:41.488937] LOGIN ATTEMPT: kalyanithakre519@gmail.com
+RESULT: Password valid = True
+SUCCESS: Token generated
+
+[2026-03-01 14:19:41.566941] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:19:41.586764] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:19:54.203475] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:19:54.214741] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:20:26.215661] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:20:26.244432] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:20:26.256208] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:20:36.257458] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:20:36.259034] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:20:36.271640] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:20:36.277570] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:21:43.466160] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:21:43.486786] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-01 14:21:43.488889] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:04:48.265545] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:04:48.324942] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:05:16.893946] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:05:16.906455] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:05:27.564569] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:05:27.573921] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:06:22.983433] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:06:23.059622] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:06:44.000089] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:06:44.001879] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:06:44.024277] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:06:44.028235] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:08:10.245266] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:08:10.271447] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
+
+[2026-03-03 18:08:10.273760] --- AUTH ATTEMPT ---
+Token (first 25): eyJhbGciOiJIUzI1NiIsInR5c...
+Payload ID: 6997f913d3448c608cbebef7, Sub: kalyanithakre519@gmail.com
+Found user by ID: 6997f913d3448c608cbebef7
+SUCCESS: Authentication complete
