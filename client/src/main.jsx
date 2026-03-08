@@ -8,9 +8,7 @@ import axios from 'axios'
 
 // Set default API URL for all axios requests
 // This allows the app to work seamlessly on both localhost (using vite proxy) and Vercel
-if (import.meta.env.VITE_API_URL) {
-  axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-}
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://med-ai-backend-iex0.onrender.com';
 
 const updateSW = registerSW({
   onNeedRefresh() {
