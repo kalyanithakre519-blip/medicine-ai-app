@@ -231,17 +231,34 @@ const SmartPrescription = () => {
                                                 </div>
                                             </div>
 
-                                            <div className="space-y-3">
-                                                <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2">
-                                                    <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span> Bio-Hazard Watch
-                                                </p>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {med.side_effects?.map((se, i) => (
-                                                        <span key={i} className="px-3 py-1.5 bg-red-500/5 text-red-400 border border-red-500/10 rounded-xl text-[10px] font-black italic">
-                                                            {se}
-                                                        </span>
-                                                    ))}
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2 mb-2">
+                                                        <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span> Bio-Hazard Watch
+                                                    </p>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {med.side_effects?.map((se, i) => (
+                                                            <span key={i} className="px-3 py-1.5 bg-red-500/5 text-red-400 border border-red-500/10 rounded-xl text-[10px] font-black italic">
+                                                                {se}
+                                                            </span>
+                                                        ))}
+                                                    </div>
                                                 </div>
+
+                                                {med.substitutes && med.substitutes.length > 0 && (
+                                                    <div>
+                                                        <p className="text-[9px] font-black text-slate-500 uppercase tracking-widest flex items-center gap-2 mb-2">
+                                                            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span> Smart Substitutes
+                                                        </p>
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {med.substitutes.map((sub, i) => (
+                                                                <span key={i} className="px-3 py-1.5 bg-emerald-500/5 text-emerald-400 border border-emerald-500/20 rounded-xl text-[10px] font-black italic shadow-sm hover:bg-emerald-500/10 transition-colors cursor-pointer">
+                                                                    {sub}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     ))}

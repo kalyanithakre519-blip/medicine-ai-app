@@ -7,3 +7,6 @@ statsmodels
 scikit-learn
 fpdf
 requests
+easyocr
+Pillow
+numpy

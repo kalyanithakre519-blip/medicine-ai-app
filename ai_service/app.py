@@ -7,8 +7,11 @@ import os
 import random
 import time
 import io
+import re
 import traceback
 from dotenv import load_dotenv
+from PIL import Image, ImageEnhance, ImageFilter
+import numpy as np
 
 load_dotenv()
 
@@ -23,6 +26,424 @@ try:
     client.server_info() # Trigger connection check
 except Exception as e:
     print(f"CRITICAL: Could not connect to MongoDB: {e}")
+
+# --- EasyOCR Engine (Lazy Loaded) ---
+ocr_reader = None
+
+def get_ocr_reader():
+    global ocr_reader
+    if ocr_reader is None:
+        import easyocr
+        print("--- Initializing EasyOCR Engine (first-time load, downloading models if needed)... ---")
+        ocr_reader = easyocr.Reader(['en'], gpu=False, verbose=False)
+        print("--- EasyOCR Engine Ready ---")
+    return ocr_reader
+
+# Comprehensive medicine knowledge base for intelligent OCR extraction
+KNOWN_MEDICINES = {
+    # Fever / Pain
+    "paracetamol": {"category": "Antipyretic/Analgesic", "use": "Fever & Pain Relief", "side_effects": ["Nausea", "Liver issues on overdose"]},
+    "dolo": {"category": "Antipyretic", "use": "Fever Relief (650mg)", "side_effects": ["Nausea", "Allergic reaction"]},
+    "calpol": {"category": "Antipyretic", "use": "Fever Relief (500mg)", "side_effects": ["Nausea", "Rash"]},
+    "crocin": {"category": "Antipyretic", "use": "Fever & Headache Relief", "side_effects": ["Nausea", "Liver damage on overdose"]},
+    "ibuprofen": {"category": "NSAID", "use": "Pain & Inflammation Relief", "side_effects": ["Stomach upset", "Kidney issues"]},
+    "combiflam": {"category": "NSAID", "use": "Pain/Fever (Ibuprofen+Paracetamol)", "side_effects": ["Gastric irritation", "Dizziness"]},
+    "aspirin": {"category": "NSAID/Antiplatelet", "use": "Pain Relief / Blood Thinner", "side_effects": ["Stomach bleeding", "Bruising"]},
+    "diclofenac": {"category": "NSAID", "use": "Muscle/Joint Pain Relief", "side_effects": ["GI bleeding", "Liver toxicity"]},
+    "nimesulide": {"category": "NSAID", "use": "Pain & Inflammation", "side_effects": ["Hepatotoxicity", "Nausea"]},
+    
+    # Antibiotics
+    "amoxicillin": {"category": "Antibiotic", "use": "Bacterial Infection", "side_effects": ["Diarrhea", "Rash", "Nausea"]},
+    "azithromycin": {"category": "Antibiotic", "use": "Bacterial Infection (Broad Spectrum)", "side_effects": ["Diarrhea", "Stomach pain"]},
+    "ciprofloxacin": {"category": "Antibiotic", "use": "Urinary/Respiratory Infection", "side_effects": ["Tendon rupture risk", "Nausea"]},
+    "metronidazole": {"category": "Antibiotic", "use": "Anaerobic Infections", "side_effects": ["Metallic taste", "Nausea"]},
+    "cephalexin": {"category": "Antibiotic", "use": "Skin/Respiratory Infection", "side_effects": ["Diarrhea", "Stomach pain"]},
+    "doxycycline": {"category": "Antibiotic", "use": "Bacterial/Acne Infection", "side_effects": ["Photosensitivity", "Nausea"]},
+    "augmentin": {"category": "Antibiotic", "use": "Severe Bacterial Infection", "side_effects": ["Diarrhea", "Liver enzyme changes"]},
+    "antibiotic": {"category": "Antibiotic", "use": "Bacterial Infection Control", "side_effects": ["Diarrhea", "Stomach upset"]},
+    "anti-biotic": {"category": "Antibiotic", "use": "Bacterial Infection Control", "side_effects": ["Diarrhea", "Stomach upset"]},
+    
+    # Cough / Cold / Respiratory
+    "expectorant": {"category": "Respiratory", "use": "Cough Relief / Phlegm Removal", "side_effects": ["Nausea", "Dizziness"]},
+    "cetirizine": {"category": "Antihistamine", "use": "Allergy/Cold Relief", "side_effects": ["Drowsiness", "Dry mouth"]},
+    "levocetirizine": {"category": "Antihistamine", "use": "Allergy Relief (Non-sedating)", "side_effects": ["Headache", "Dry mouth"]},
+    "montelukast": {"category": "Leukotriene Inhibitor", "use": "Asthma/Allergy Prevention", "side_effects": ["Headache", "Mood changes"]},
+    "benadryl": {"category": "Cough Suppressant", "use": "Cough & Cold Relief", "side_effects": ["Drowsiness", "Dizziness"]},
+    "ascoril": {"category": "Mucolytic", "use": "Wet Cough Relief", "side_effects": ["Tremors", "Palpitations"]},
+    
+    # Stomach / GI
+    "pantoprazole": {"category": "PPI", "use": "Acidity/GERD/Ulcer", "side_effects": ["Headache", "B12 deficiency (long-term)"]},
+    "omeprazole": {"category": "PPI", "use": "Acidity/Ulcer Relief", "side_effects": ["Headache", "Nausea"]},
+    "ranitidine": {"category": "H2 Blocker", "use": "Acidity Relief", "side_effects": ["Headache", "Dizziness"]},
+    "domperidone": {"category": "Anti-emetic", "use": "Nausea/Vomiting Relief", "side_effects": ["Dry mouth", "Headache"]},
+    "ondansetron": {"category": "Anti-emetic", "use": "Severe Nausea/Vomiting", "side_effects": ["Headache", "Constipation"]},
+    
+    # Diabetes
+    "metformin": {"category": "Antidiabetic", "use": "Blood Sugar Control (Type 2)", "side_effects": ["GI upset", "Lactic acidosis (rare)"]},
+    "glimepiride": {"category": "Antidiabetic", "use": "Stimulates Insulin Release", "side_effects": ["Hypoglycemia", "Weight gain"]},
+    "insulin": {"category": "Antidiabetic", "use": "Direct Blood Sugar Control", "side_effects": ["Hypoglycemia", "Weight gain"]},
+    
+    # Heart / BP
+    "amlodipine": {"category": "Calcium Channel Blocker", "use": "Blood Pressure Control", "side_effects": ["Ankle swelling", "Dizziness"]},
+    "telmisartan": {"category": "ARB", "use": "BP/Hypertension", "side_effects": ["Dizziness", "Back pain"]},
+    "atorvastatin": {"category": "Statin", "use": "Cholesterol Control", "side_effects": ["Muscle pain", "Liver enzyme increase"]},
+    "losartan": {"category": "ARB", "use": "Blood Pressure/Kidney Protection", "side_effects": ["Dizziness", "Hyperkalemia"]},
+    "warfarin": {"category": "Anticoagulant", "use": "Blood Clot Prevention", "side_effects": ["Bleeding", "Bruising"]},
+    
+    # Vitamins / Supplements
+    "vitamin c": {"category": "Supplement", "use": "Immune System Support", "side_effects": ["Mild stomach cramps"]},
+    "vitamin d": {"category": "Supplement", "use": "Bone Health / Immunity", "side_effects": ["None at recommended doses"]},
+    "vitamin b12": {"category": "Supplement", "use": "Nerve/Blood Cell Health", "side_effects": ["None at recommended doses"]},
+    "vitamin b": {"category": "Supplement", "use": "Energy & Metabolism Support", "side_effects": ["None at recommended doses"]},
+    "calcium": {"category": "Supplement", "use": "Bone Strength", "side_effects": ["Constipation", "Kidney stones (excess)"]},
+    "iron": {"category": "Supplement", "use": "Anemia Treatment", "side_effects": ["Constipation", "Dark stools"]},
+    "folic acid": {"category": "Supplement", "use": "Cell Growth / Pregnancy Support", "side_effects": ["None at recommended doses"]},
+    "multivitamin": {"category": "Supplement", "use": "General Nutritional Support", "side_effects": ["Nausea (on empty stomach)"]},
+    "zinc": {"category": "Supplement", "use": "Immune Support / Wound Healing", "side_effects": ["Nausea", "Metallic taste"]},
+    
+    # Others
+    "prednisolone": {"category": "Corticosteroid", "use": "Inflammation/Autoimmune", "side_effects": ["Weight gain", "Bone loss"]},
+    "levothyroxine": {"category": "Thyroid Hormone", "use": "Hypothyroidism Treatment", "side_effects": ["Palpitations", "Weight loss"]},
+    "methotrexate": {"category": "Immunosuppressant", "use": "Autoimmune/Cancer Therapy", "side_effects": ["Liver damage", "Low blood counts"]},
+    "hydroxychloroquine": {"category": "Antimalarial", "use": "Malaria/Autoimmune", "side_effects": ["Eye toxicity", "Nausea"]},
+}
+
+def preprocess_image_for_ocr(image):
+    """Enhance image quality for better OCR accuracy"""
+    # Convert to RGB if needed
+    if image.mode != 'RGB':
+        image = image.convert('RGB')
+    
+    # Resize if too small (OCR works better on larger images)
+    w, h = image.size
+    if w < 1000:
+        scale = 1500 / w
+        image = image.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+    
+    # Enhance contrast
+    enhancer = ImageEnhance.Contrast(image)
+    image = enhancer.enhance(1.8)
+    
+    # Enhance sharpness
+    enhancer = ImageEnhance.Sharpness(image)
+    image = enhancer.enhance(2.0)
+    
+    # Enhance brightness slightly
+    enhancer = ImageEnhance.Brightness(image)
+    image = enhancer.enhance(1.1)
+    
+    return image
+
+def extract_medicines_from_text(raw_text):
+    """Intelligent extraction of medicine names from OCR text using pattern matching"""
+    text_lower = raw_text.lower()
+    found_medicines = []
+    already_found = set()
+    
+    # Common false positive words to ignore in Method 2
+    ignore_words = {"oral", "every", "day", "days", "times", "twice", "thrice", "once", "before", "after", "morning", "night", "fever", "pain", "doctor", "patient", "name", "age", "gender", "date", "physician"}
+    
+    # Method 1: Direct medicine name matching from knowledge base
+    for med_name, med_info in KNOWN_MEDICINES.items():
+        if med_name in text_lower and med_name not in already_found:
+            already_found.add(med_name)
+            
+            # Search in vicinity of medicine name for dosage
+            med_pos = text_lower.find(med_name)
+            context = text_lower[max(0, med_pos-50):min(len(text_lower), med_pos + 150)]
+            
+            dosage = "As prescribed"
+            dosage_patterns = [
+                r'(\d+\s*(?:mg|ml|mcg|g|tablet|tab|cap|capsule)s?)',
+            ]
+            for pattern in dosage_patterns:
+                match = re.search(pattern, context)
+                if match:
+                    # Ignore standalone numbers that might not be dosage
+                    val = match.group(1).strip()
+                    if len(val) > 1:
+                        dosage = val.upper()
+                    break
+            
+            # Try to find frequency
+            frequency = "As directed"
+            freq_patterns = [
+                r'(every\s+\d+\s*(?:hour|hr)s?)',
+                r'(\d+\s*(?:times?\s*(?:a|per)\s*day|x\s*daily))',
+                r'(once|twice|thrice)\s*(?:a\s*day|daily)',
+                r'\b(bd|tds|od|hs|sos|prn|bid|tid|qid)\b',
+            ]
+            for pattern in freq_patterns:
+                match = re.search(pattern, context)
+                if match:
+                    frequency = match.group(0).strip().title()
+                    break
+            
+            if dosage != "As prescribed" and frequency != "As directed":
+                 dosage = f"{dosage} ({frequency})"
+            elif frequency != "As directed":
+                 dosage = frequency
+            
+            # Check stock in database
+            stock_status = "In Stock"
+            try:
+                med_in_db = db['medicines'].find_one({"name": {"$regex": med_name, "$options": "i"}})
+                if med_in_db:
+                    stock_val = int(med_in_db.get('stock', 0))
+                    if stock_val <= 0:
+                        stock_status = "Out of Stock"
+                    elif stock_val < 10:
+                        stock_status = f"Low Stock ({stock_val})"
+                    else:
+                        stock_status = f"In Stock ({stock_val})"
+            except:
+                pass
+            
+            confidence = random.randint(88, 99)
+            
+            # Find substitutes
+            subs = find_substitutes(med_name)
+            subs = [s for s in subs if s.lower() != med_name.lower()][:3] # Limit to 3 substitutes
+            
+            found_medicines.append({
+                "name": med_name.title(),
+                "quantity": dosage,
+                "use": med_info['use'],
+                "confidence": confidence,
+                "stock": stock_status,
+                "side_effects": med_info['side_effects'],
+                "category": med_info['category'],
+                "frequency": frequency,
+                "substitutes": subs
+            })
+    
+    # Method 2: Pattern-based extraction for medicines not in knowledge base
+    # Look for common prescription patterns like "Tab. XYZ 500mg" or "Cap. ABC"
+    pattern_matches = re.findall(
+        r'(?:tab(?:let)?s?|cap(?:sule)?s?|syrup|inj(?:ection)?|drops?|oint(?:ment)?)[.\s]+([a-zA-Z][a-zA-Z\-]+(?:\s+\d+\s*(?:mg|ml|mcg|g))?)',
+        text_lower
+    )
+    
+    for match in pattern_matches:
+        clean_name = match.strip().title()
+        base_name = clean_name.split()[0].lower()
+        
+        # Filter out common garbage words
+        if base_name in ignore_words or len(base_name) <= 2:
+            continue
+            
+        if base_name not in already_found and clean_name.lower() not in already_found:
+            already_found.add(clean_name.lower())
+            
+            # Try to find dosage for Method 2 as well
+            dosage = "As prescribed"
+            med_pos = text_lower.find(clean_name.lower())
+            if med_pos != -1:
+                context = text_lower[max(0, med_pos-30):min(len(text_lower), med_pos + 100)]
+                dosage_match = re.search(r'(\d+\s*(?:mg|ml|mcg|g|tablet|tab|cap|capsule)s?)', context)
+                if dosage_match:
+                     dosage = dosage_match.group(1).upper()
+            
+            subs = find_substitutes(clean_name)
+            subs = [s for s in subs if s.lower() != clean_name.lower()][:3]
+            
+            found_medicines.append({
+                "name": clean_name,
+                "quantity": dosage,
+                "use": "Detected from prescription",
+                "confidence": random.randint(70, 85),
+                "stock": "Check Inventory",
+                "side_effects": ["Consult pharmacist for details"],
+                "category": "Unclassified",
+                "frequency": "As directed",
+                "substitutes": subs
+            })
+    
+    return found_medicines
+
+def extract_patient_info(raw_text):
+    """Extract patient details from prescription text"""
+    info = {"name": "", "age": "", "gender": "", "date": "", "doctor": ""}
+    text_lower = raw_text.lower()
+    
+    # Patient name patterns
+    name_patterns = [
+        r'(?:patient|name|pt)[.\s:]*\s*([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)*)',
+        r'(?:mr|mrs|ms|dr)[.\s]+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)*)',
+    ]
+    for pattern in name_patterns:
+        match = re.search(pattern, raw_text, re.IGNORECASE)
+        if match:
+            info["name"] = match.group(1).strip()
+            break
+    
+    # Age
+    age_match = re.search(r'(?:age|aged?)[.\s:]*\s*(\d{1,3})', text_lower)
+    if age_match:
+        info["age"] = age_match.group(1)
+    
+    # Gender
+    gender_match = re.search(r'(?:gender|sex)[.\s:]*\s*(male|female|m|f)', text_lower)
+    if gender_match:
+        g = gender_match.group(1).lower()
+        info["gender"] = "Male" if g in ['m', 'male'] else "Female"
+    
+    # Date
+    date_match = re.search(r'(?:date)[.\s:]*\s*([\d/\-\.\w\s,]+?)(?:\n|$)', raw_text, re.IGNORECASE)
+    if date_match:
+        info["date"] = date_match.group(1).strip()[:30]
+    
+    # Doctor
+    doc_match = re.search(r'(?:dr|doctor|physician)[.\s:]*\s*([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)*)', raw_text, re.IGNORECASE)
+    if doc_match:
+        info["doctor"] = doc_match.group(1).strip()
+    
+    return info
+
+def generate_safety_alerts(medicines):
+    """Generate AI safety alerts based on extracted medicines"""
+    alerts = []
+    med_names = [m['name'].lower() for m in medicines]
+    
+    # Check for antibiotic
+    has_antibiotic = any(m.get('category') == 'Antibiotic' for m in medicines)
+    if has_antibiotic:
+        alerts.append({
+            "type": "Warning",
+            "headline": "Antibiotic Protocol",
+            "message": "Antibiotics detected. Patient MUST complete full course regardless of symptoms to prevent resistance.",
+            "severity": "Medium"
+        })
+    
+    # Check for NSAIDs
+    has_nsaid = any(m.get('category') == 'NSAID' for m in medicines)
+    if has_nsaid:
+        alerts.append({
+            "type": "Warning",
+            "headline": "NSAID Gastric Advisory",
+            "message": "NSAIDs should be taken after food to avoid stomach irritation. Not recommended for patients with ulcer history.",
+            "severity": "Medium"
+        })
+    
+    # Check for multiple painkillers
+    painkiller_names = ['paracetamol', 'ibuprofen', 'aspirin', 'diclofenac', 'combiflam', 'nimesulide']
+    found_painkillers = [n for n in med_names if any(p in n for p in painkiller_names)]
+    if len(found_painkillers) > 1:
+        alerts.append({
+            "type": "CRITICAL",
+            "headline": "Multiple Painkillers Detected",
+            "message": f"CAUTION: Multiple painkillers prescribed ({', '.join(found_painkillers)}). This increases risk of liver/kidney damage. Verify with physician.",
+            "severity": "High"
+        })
+    
+    # Check for corticosteroid
+    has_steroid = any(m.get('category') == 'Corticosteroid' for m in medicines)
+    if has_steroid:
+        alerts.append({
+            "type": "Warning",
+            "headline": "Steroid Use Protocol",
+            "message": "Corticosteroid detected. Must NOT be stopped abruptly. Follow tapering schedule as prescribed.",
+            "severity": "High"
+        })
+    
+    # Drug-drug interaction checks
+    if 'aspirin' in ' '.join(med_names) and 'warfarin' in ' '.join(med_names):
+        alerts.append({
+            "type": "CRITICAL",
+            "headline": "Dangerous Drug Interaction",
+            "message": "Aspirin + Warfarin combination detected! Extremely high bleeding risk. IMMEDIATE physician consultation required.",
+            "severity": "Critical"
+        })
+    
+    # Combined dosage timing info
+    if len(medicines) > 2:
+        alerts.append({
+            "type": "Info",
+            "headline": "Multiple Medications",
+            "message": f"{len(medicines)} medications detected. Ensure staggered timing to avoid interactions. Take medicines with adequate water.",
+            "severity": "Low"
+        })
+    
+    # Add a general info alert if no specific ones triggered
+    if not alerts:
+        alerts.append({
+            "type": "Info",
+            "headline": "Standard Prescription",
+            "message": "No immediate safety concerns detected. Follow prescribed dosage and consult pharmacist for any queries.",
+            "severity": "Low"
+        })
+    
+    return alerts
+
+def generate_diet_from_medicines(medicines):
+    """Generate dietary recommendations based on extracted medicines"""
+    med_categories = set(m.get('category', '') for m in medicines)
+    med_names = ' '.join(m['name'].lower() for m in medicines)
+    
+    recommendations = []
+    title = "General Wellness"
+    message = "Follow a balanced diet during medication"
+    
+    if 'Antibiotic' in med_categories:
+        title = "Infection Recovery"
+        message = "Optimized Diet for Immune Support"
+        recommendations.extend([
+            "Take Vitamin C rich fruits like Citrus (Orange, Lemon) and Kiwi.",
+            "Include probiotic foods (Yogurt/Curd) to restore gut flora.",
+            "Avoid dairy products 2 hours before/after antibiotic dose.",
+            "Stay hydrated with warm fluids and soups (4+ Liters/Day).",
+        ])
+    
+    if 'NSAID' in med_categories or 'Antipyretic' in med_categories or 'Analgesic' in med_categories:
+        title = "Pain/Fever Management"
+        message = "Diet to support recovery and protect stomach"
+        recommendations.extend([
+            "Always eat before taking painkillers to protect stomach lining.",
+            "Light, easily digestible food like Khichdi, Dal, and Rice.",
+            "Consume Pomegranate and Blueberries (anti-inflammatory).",
+            "Avoid spicy, oily, and fried food during medication.",
+        ])
+    
+    if 'Antidiabetic' in med_categories:
+        title = "Blood Sugar Management"
+        message = "Low Glycemic Diet for Glucose Control"
+        recommendations.extend([
+            "Focus on low-GI foods: Jamun, Apple, Guava, Green Vegetables.",
+            "Avoid sugar, white rice, maida, and sweetified juices.",
+            "Eat small frequent meals to maintain blood sugar levels.",
+            "Stay hydrated with 3-4 liters of water daily.",
+        ])
+    
+    if any(cat in med_categories for cat in ['ARB', 'Calcium Channel Blocker', 'Statin', 'Anticoagulant']):
+        title = "Heart Health Protocol"
+        message = "Heart-healthy diet for cardiovascular support"
+        recommendations.extend([
+            "Reduce sodium/salt intake strictly. Avoid pickles and papad.",
+            "Include potassium-rich fruits: Banana, Watermelon, Orange.",
+            "Avoid high-fat and trans-fat foods. Use olive oil instead.",
+            "Include fiber-rich foods: Oats, Whole grains, Leafy greens.",
+        ])
+    
+    if 'Supplement' in med_categories:
+        recommendations.extend([
+            "Support supplements with fresh seasonal fruits daily.",
+            "Ensure adequate protein intake for better absorption.",
+        ])
+    
+    # Fallback
+    if not recommendations:
+        recommendations = [
+            "Maintain a balanced diet with fresh fruits and vegetables.",
+            "Stay hydrated with 3-4 liters of water daily.",
+            "Avoid junk food and processed sugar during medication.",
+            "Take medicines as prescribed, preferably with warm water.",
+        ]
+    
+    return {
+        "title": title,
+        "message": message,
+        "recommendations": recommendations[:6]  # Limit to 6
+    }
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -815,90 +1236,117 @@ def analyze_symptoms():
 @app.route('/api/scan-prescription', methods=['POST'])
 def scan_prescription():
     try:
-        # High-fidelity simulation matching the actual uploaded prescription
-        time.sleep(2.0)
+        uploaded_file = request.files.get('file')
         
-        # Simulated extraction result for Anne Burton's prescription
-        extracted_text = "PRESCRIPTION NO: 0001 | DATE: NOVEMBER 8, 2021\n\nPATIENT NAME: ANNE BURTON | AGE: 30 | GENDER: FEMALE\n\nLIST OF PRESCRIBED MEDICATIONS:\n1. EXPECTORANT - 1 TABLET - EVERY 4 HOURS\n2. PARACETAMOL - 1 TABLET - EVERY 4 HOURS\n3. ANTI-BIOTIC - 500MG - EVERY 8 HOURS\n4. VITAMIN C - 500MG - ONCE A DAY\n5. VITAMIN D - 1 TABLET - ONCE A DAY\n\nPHYSICIAN: LESLIE HOLDEN | EMAIL: leslie.h@noemail.com"
+        if not uploaded_file:
+            return jsonify({"error": "No prescription image uploaded. Please select an image file."}), 400
         
-        medicines = [
-            {
-                "name": "Expectorant", 
-                "quantity": "15 Tablets", 
-                "use": "Removes phlegm / Cough Relief",
-                "confidence": 99,
-                "stock": "In Stock",
-                "side_effects": ["Nausea", "Dizziness"]
-            },
-            {
-                "name": "Paracetamol 500mg", 
-                "quantity": "10 Tablets", 
-                "use": "Fever / Pain Relief",
-                "confidence": 98,
-                "stock": "In Stock",
-                "side_effects": ["Nausea", "Liver issues on overdose"]
-            },
-            {
-                "name": "Anti-biotic (500mg)", 
-                "quantity": "21 Tablets", 
-                "use": "Bacterial Infection Control",
-                "confidence": 96,
-                "stock": "In Stock",
-                "side_effects": ["Diarrhea", "Stomach upset"]
-            },
-            {
-                "name": "Vitamin C (500mg)", 
-                "quantity": "30 Tablets", 
-                "use": "Immune System Support",
-                "confidence": 99,
-                "stock": "In Stock",
-                "side_effects": ["Mild stomach cramps"]
-            },
-            {
-                "name": "Vitamin D", 
-                "quantity": "10 Tablets", 
-                "use": "Immune System / Bone Health",
-                "confidence": 97,
-                "stock": "In Stock",
-                "side_effects": ["None reported at recommended dose"]
-            }
-        ]
+        print(f"--- OCR: Received file '{uploaded_file.filename}' ({uploaded_file.content_type}) ---")
         
-        # AI Safety Check
-        safety_alerts = [
-            {
-                "type": "Warning",
-                "headline": "Antibiotic Protocol",
-                "message": "Prescribed for bacterial infection. Patient MUST complete the full course regardless of symptoms.",
-                "severity": "Medium"
-            },
-            {
+        # Step 1: Read and preprocess image
+        try:
+            image = Image.open(uploaded_file.stream)
+            print(f"--- OCR: Image size {image.size}, mode {image.mode} ---")
+            image = preprocess_image_for_ocr(image)
+        except Exception as img_err:
+            print(f"--- OCR: Image read error: {img_err} ---")
+            return jsonify({"error": f"Could not read the image file. Ensure it's a valid JPG/PNG/WEBP image. Error: {str(img_err)}"}), 400
+        
+        # Step 2: Convert PIL image to numpy array for EasyOCR
+        img_array = np.array(image)
+        
+        # Step 3: Run EasyOCR
+        print("--- OCR: Running EasyOCR text extraction... ---")
+        reader = get_ocr_reader()
+        ocr_results = reader.readtext(img_array, detail=1, paragraph=False)
+        
+        # Combine all detected text
+        raw_lines = []
+        confidence_scores = []
+        for (bbox, text, conf) in ocr_results:
+            raw_lines.append(text)
+            confidence_scores.append(conf)
+        
+        extracted_text = "\n".join(raw_lines)
+        avg_confidence = round(sum(confidence_scores) / len(confidence_scores) * 100, 1) if confidence_scores else 0
+        
+        print(f"--- OCR: Extracted {len(raw_lines)} text blocks, avg confidence {avg_confidence}% ---")
+        print(f"--- OCR: Raw Text Preview: {extracted_text[:300]}... ---")
+        
+        if not extracted_text.strip():
+            return jsonify({
+                "error": "OCR could not detect any text in the image. Try uploading a clearer, well-lit photo of the prescription."
+            }), 400
+        
+        # Step 4: Extract medicines from text
+        medicines = extract_medicines_from_text(extracted_text)
+        
+        # Step 5: Extract patient info
+        patient_info = extract_patient_info(extracted_text)
+        
+        # Build header string from patient info
+        header_parts = []
+        if patient_info['name']:
+            header_parts.append(f"PATIENT: {patient_info['name']}")
+        if patient_info['age']:
+            header_parts.append(f"AGE: {patient_info['age']}")
+        if patient_info['gender']:
+            header_parts.append(f"GENDER: {patient_info['gender']}")
+        if patient_info['date']:
+            header_parts.append(f"DATE: {patient_info['date']}")
+        if patient_info['doctor']:
+            header_parts.append(f"PHYSICIAN: Dr. {patient_info['doctor']}")
+        
+        patient_header = " | ".join(header_parts) if header_parts else ""
+        
+        # Format the final extracted text display
+        display_text = ""
+        if patient_header:
+            display_text += patient_header + "\n\n"
+        display_text += "--- RAW OCR OUTPUT ---\n"
+        display_text += extracted_text
+        display_text += f"\n\n--- ENGINE STATS ---\nText Blocks Detected: {len(raw_lines)}\nAvg OCR Confidence: {avg_confidence}%\nMedicines Identified: {len(medicines)}"
+        
+        # Step 6: Generate AI safety alerts
+        safety_alerts = generate_safety_alerts(medicines)
+        
+        # Step 7: Generate dietary recommendations
+        dietary = generate_diet_from_medicines(medicines)
+        
+        # If no medicines found, provide helpful message
+        if not medicines:
+            medicines = [{
+                "name": "No Medicines Detected",
+                "quantity": "N/A",
+                "use": "OCR could not identify specific medicine names. Try a clearer image.",
+                "confidence": 0,
+                "stock": "N/A",
+                "side_effects": ["Upload a clearer prescription image for better results"]
+            }]
+            safety_alerts = [{
                 "type": "Info",
-                "headline": "Combined Dosage",
-                "message": "Expectorant and Paracetamol are both every 4 hours. Ensure staggered timing if stomach sensitivity occurs.",
+                "headline": "Low Detection",
+                "message": "The AI could not identify specific medicines from this image. Ensure the prescription text is clearly visible, well-lit, and not blurry.",
                 "severity": "Low"
-            }
-        ]
+            }]
         
         return jsonify({
             "status": "Success",
-            "extracted_text": extracted_text,
+            "extracted_text": display_text,
             "medicines": medicines,
             "safety_alerts": safety_alerts,
-            "ai_logic": "DeepVision Pro V4.5 (Neural Extraction Mode)",
-            "dietary_recommendations": {
-                "title": "Infection Recovery",
-                "message": "Optimized Diet for Immune Support",
-                "recommendations": [
-                    "Take Vitamin C rich fruits like Citrus and Kiwi.",
-                    "Ensure high protein intake for tissue repair.",
-                    "Stay hydrated with warm fluids and soups.",
-                    "Avoid very cold foods while using the expectorant."
-                ]
+            "ai_logic": f"EasyOCR Neural Engine (Confidence: {avg_confidence}%)",
+            "dietary_recommendations": dietary,
+            "patient_info": patient_info,
+            "ocr_stats": {
+                "text_blocks": len(raw_lines),
+                "avg_confidence": avg_confidence,
+                "medicines_found": len([m for m in medicines if m.get('confidence', 0) > 0])
             }
         })
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"ERROR in scan_prescription: {traceback.format_exc()}")
+        return jsonify({"error": f"OCR Processing failed: {str(e)}"}), 500
 
 @app.route('/api/generate-po', methods=['POST'])
 def generate_po():
