@@ -12,7 +12,7 @@ router = APIRouter()
 @router.get("", response_model=List[MedicineDB])
 async def get_medicines(current_user: dict = Depends(get_current_user)):
     print(f"DEBUG: get_medicines called by user: {current_user.get('email')}")
-    cursor = medicines_collection.find({})
+    cursor = medicines_collection.find({}).sort("_id", -1)
     medicines = await cursor.to_list(length=1000)
     
     # Convert ObjectId to string to match MedicineDB schema

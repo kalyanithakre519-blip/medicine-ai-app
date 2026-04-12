@@ -89,7 +89,8 @@ const SupplierList = () => {
             fetchData();
         } catch (error) {
             console.error(error);
-            alert('Failed to add supplier. Root Protocol Denied.');
+            const detail = error.response?.data?.detail || 'Root Protocol Denied.';
+            alert(`Failed to add supplier. ${detail}`);
         }
     };
 

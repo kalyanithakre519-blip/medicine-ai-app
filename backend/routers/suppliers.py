@@ -11,7 +11,7 @@ router = APIRouter()
 
 @router.get("", response_model=List[SupplierDB])
 async def read_suppliers(current_user: dict = Depends(get_current_user)):
-    suppliers = await suppliers_collection.find().to_list(100)
+    suppliers = await suppliers_collection.find().sort("_id", -1).to_list(100)
     for s in suppliers:
         if "_id" in s:
             s["_id"] = str(s["_id"])

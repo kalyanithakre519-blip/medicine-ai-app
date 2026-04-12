@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
-import { FaChartLine, FaMagic, FaPlus, FaCheckCircle, FaExclamationTriangle, FaArrowLeft, FaBrain } from 'react-icons/fa';
+import { FaBoxes, FaChartLine, FaRobot, FaExclamationTriangle, FaArrowLeft, FaBrain } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import {
     Chart as ChartJS,
@@ -26,8 +26,8 @@ ChartJS.register(
     Filler
 );
 
-const StockPrediction = () => {
-    const [data, setData] = useState({ historical: [], forecast: [] });
+const InventoryIntelligence = () => {
+    const [data, setData] = useState({ top_item_graph: [], inventory_intelligence: [] });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -39,8 +39,8 @@ const StockPrediction = () => {
                 setData(response.data);
                 setLoading(false);
             } catch (err) {
-                console.error("Error fetching forecast:", err);
-                setError(err.response?.data?.error || "Neural Forecast Engine Offline.");
+                console.error("Error fetching EOQ data:", err);
+                setError(err.response?.data?.error || "AI Engine Offline.");
                 setLoading(false);
             }
         };
@@ -48,31 +48,27 @@ const StockPrediction = () => {
     }, []);
 
     const chartData = {
-        labels: [...data.historical.map(h => h.date), ...data.forecast.map(f => f.date)],
+        labels: data.top_item_graph.map(h => h.date),
         datasets: [
             {
-                label: 'Historical Revenue (Actual)',
-                data: data.historical.map(h => h.revenue),
-                borderColor: '#6366f1',
-                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                label: 'Projected Stock Level (Sawtooth)',
+                data: data.top_item_graph.map(h => h.stockLevel),
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
                 borderWidth: 3,
-                pointRadius: 4,
+                pointRadius: 1,
                 fill: true,
-                tension: 0.4,
+                tension: 0.1,
             },
             {
-                label: 'AI Neural Forecast (Projected)',
-                data: [
-                    ...Array(data.historical.length > 0 ? data.historical.length - 1 : 0).fill(null),
-                    data.historical.length > 0 ? data.historical[data.historical.length - 1].revenue : null,
-                    ...data.forecast.map(f => f.predicted_revenue)
-                ],
-                borderColor: '#10b981',
-                borderDash: [10, 5],
-                borderWidth: 3,
-                backgroundColor: 'rgba(16, 185, 129, 0.05)',
-                fill: true,
-                tension: 0.4,
+                label: 'Reorder Point (Trigger)',
+                data: data.top_item_graph.map(h => h.reorderLevel),
+                borderColor: '#ef4444',
+                borderDash: [5, 5],
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: false,
+                tension: 0,
             }
         ],
     };
@@ -81,17 +77,14 @@ const StockPrediction = () => {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            legend: {
-                position: 'top',
-                labels: { color: '#94a3b8', font: { weight: 'bold' } }
-            },
+            legend: { position: 'top', labels: { color: '#94a3b8', font: { weight: 'bold' } } },
             title: { display: false },
         },
         scales: {
             y: {
                 grid: { color: 'rgba(255,255,255,0.05)' },
                 ticks: { color: '#64748b', font: { weight: 'bold' } },
-                title: { display: true, text: 'Revenue (₹)', color: '#475569' }
+                title: { display: true, text: 'Quantity Available', color: '#475569' }
             },
             x: {
                 grid: { display: false },
@@ -103,28 +96,28 @@ const StockPrediction = () => {
     if (loading) return (
         <div className="min-h-screen bg-[#020617] flex flex-col items-center justify-center">
             <div className="w-16 h-16 border-4 border-slate-700 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
-            <p className="text-slate-400 font-black uppercase tracking-widest text-xs animate-pulse">Running Predictive Neural Models...</p>
+            <p className="text-slate-400 font-black uppercase tracking-widest text-xs animate-pulse">Running EOQ Matrix...</p>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-[#020617] text-white p-4 lg:p-8 font-sans">
+        <div className="min-h-screen bg-[#020617] text-white p-4 lg:p-8 font-sans pb-20">
             <header className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
                 <div className="flex items-center gap-4">
                     <button onClick={() => navigate('/dashboard')} className="p-3 bg-slate-800/50 hover:bg-slate-700 rounded-2xl transition-all border border-slate-700/50">
                         <FaArrowLeft />
                     </button>
                     <div>
-                        <h1 className="text-3xl lg:text-5xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent italic tracking-tighter">
-                            Neural Demand Forecast
+                        <h1 className="text-3xl lg:text-5xl font-black bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400 bg-clip-text text-transparent italic tracking-tighter">
+                            Advanced EOQ & ABC Analysis
                         </h1>
-                        <p className="text-slate-400 font-bold uppercase tracking-[0.3em] text-[10px] mt-1">Holt-Winters Pro Exponential Smoothing V4.0</p>
+                        <p className="text-slate-400 font-bold uppercase tracking-[0.2em] text-[10px] mt-1">Economic Order Quantity & Auto-Replenishment Matrix</p>
                     </div>
                 </div>
                 <div className="flex gap-4">
-                    <div className="px-6 py-3 bg-indigo-500/10 rounded-2xl border border-indigo-500/20 flex items-center gap-3">
-                        <FaBrain className="text-indigo-500" />
-                        <span className="text-[10px] font-black uppercase text-indigo-400">Model Confidence: {data.confidence_score || 0}%</span>
+                    <div className="px-6 py-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 flex items-center gap-3">
+                        <FaRobot className="text-emerald-500" />
+                        <span className="text-[10px] font-black uppercase text-emerald-400">Alg: {data.algorithm || 'JIT Engine'}</span>
                     </div>
                 </div>
             </header>
@@ -133,88 +126,78 @@ const StockPrediction = () => {
                 {error ? (
                     <div className="bg-slate-900/50 border border-red-500/20 rounded-[3rem] p-16 text-center backdrop-blur-xl">
                         <FaExclamationTriangle size={64} className="text-red-500 mx-auto mb-6" />
-                        <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">AI Engine Error</h3>
+                        <h3 className="text-2xl font-black mb-2 uppercase tracking-tight">System Offline</h3>
                         <p className="text-slate-500 font-bold">{error}</p>
-                        <button onClick={() => navigate('/billing')} className="mt-8 px-8 py-4 bg-indigo-600 rounded-2xl font-black text-xs uppercase tracking-widest">Add More Sales Data</button>
                     </div>
                 ) : (
                     <>
-                        <div className="grid lg:grid-cols-3 gap-8">
-                            <div className="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-[3rem] p-8 shadow-2xl relative overflow-hidden">
-                                <div className="absolute top-8 right-8 flex items-center gap-2">
-                                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></div>
-                                    <span className="text-[9px] font-black text-emerald-500 uppercase tracking-widest">Real-time Prediction</span>
-                                </div>
-                                <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-8">Sales Velocity Chart</h3>
-                                <div className="h-[400px]">
-                                    <Line options={options} data={chartData} />
-                                </div>
+                        {/* Top Graph Section */}
+                        <div className="bg-slate-900 border border-slate-800 rounded-[3rem] p-8 shadow-2xl relative overflow-hidden">
+                            <h3 className="text-xs font-black text-slate-500 uppercase tracking-[0.3em] mb-2 flex items-center gap-2">
+                                <FaChartLine /> JIT Replenishment Simulation (Top VIP Item)
+                            </h3>
+                            <p className="text-[10px] text-slate-500 mb-6 max-w-xl">
+                                This saw-tooth model demonstrates the optimal time to reorder an item to prevent stockouts while minimizing holding costs (Economic Order Quantity).
+                            </p>
+                            <div className="h-[300px]">
+                                <Line options={options} data={chartData} />
                             </div>
+                        </div>
 
-                            <div className="space-y-6">
-                                <div className="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-[2.5rem] p-8 shadow-2xl shadow-emerald-900/20">
-                                    <h3 className="text-xl font-black italic tracking-tighter uppercase mb-6 flex items-center gap-3">
-                                        <FaChartLine /> Forecast Insights
-                                    </h3>
-                                    <div className="space-y-4">
-                                        {data.forecast.slice(0, 5).map((f, i) => (
-                                            <div key={i} className="flex justify-between items-center bg-white/10 p-4 rounded-2xl border border-white/5 backdrop-blur-md">
-                                                <div>
-                                                    <p className="text-[10px] font-black text-emerald-200 uppercase tracking-widest">Projected Date</p>
-                                                    <p className="font-bold text-white">{f.date}</p>
-                                                </div>
-                                                <div className="text-right">
-                                                    <p className="text-[10px] font-black text-emerald-200 uppercase tracking-widest">Est. Revenue</p>
-                                                    <p className="text-lg font-black text-white">₹{f.predicted_revenue}</p>
-                                                </div>
-                                            </div>
+                        {/* Inventory Matrix Table */}
+                        <div className="bg-slate-900 border border-slate-800 rounded-[2.5rem] overflow-hidden shadow-2xl">
+                            <div className="p-6 border-b border-slate-800 bg-black/20 flex items-center gap-3">
+                                <FaBoxes className="text-indigo-400" />
+                                <h3 className="text-sm font-black text-slate-300 uppercase tracking-[0.2em]">ABC Stratification & Reorder Engine</h3>
+                            </div>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr className="bg-slate-800/30 text-[10px] uppercase tracking-widest text-slate-500">
+                                            <th className="p-4 font-black">Medicine</th>
+                                            <th className="p-4 font-black">ABC Class</th>
+                                            <th className="p-4 font-black">Velocity/Day</th>
+                                            <th className="p-4 font-black">Reorder Pt</th>
+                                            <th className="p-4 font-black text-emerald-400">EOQ (Order Qty)</th>
+                                            <th className="p-4 font-black">Cur. Stock</th>
+                                            <th className="p-4 font-black">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-sm divide-y divide-slate-800/50">
+                                        {data.inventory_intelligence.map((item, idx) => (
+                                            <tr key={idx} className="hover:bg-slate-800/30 transition-colors">
+                                                <td className="p-4 font-bold text-white">{item.medicine}</td>
+                                                <td className="p-4">
+                                                    <span className={`px-2 py-1 rounded text-[10px] font-black uppercase ${item.category.includes('A') ? 'bg-indigo-500/20 text-indigo-400' : item.category.includes('B') ? 'bg-sky-500/20 text-sky-400' : 'bg-slate-500/20 text-slate-400'}`}>
+                                                        {item.category}
+                                                    </span>
+                                                </td>
+                                                <td className="p-4 text-slate-400 font-mono">{item.daily_velocity} / d</td>
+                                                <td className="p-4 text-amber-500 font-black">{item.reorder_point}</td>
+                                                <td className="p-4 text-emerald-400 font-black text-lg">+{item.eoq}</td>
+                                                <td className="p-4 text-slate-300 font-bold">{item.current_stock}</td>
+                                                <td className="p-4">
+                                                    {item.status === 'REORDER NOW' ? (
+                                                        <span className="flex items-center gap-2 text-rose-500 font-black text-xs uppercase bg-rose-500/10 px-3 py-1 rounded-full w-max">
+                                                            <FaExclamationTriangle /> REORDER NOW
+                                                        </span>
+                                                    ) : item.status === 'OVERSTOCKED' ? (
+                                                        <span className="text-amber-500 font-black text-xs uppercase bg-amber-500/10 px-3 py-1 rounded-full">
+                                                            Excess Cap
+                                                        </span>
+                                                    ) : (
+                                                        <span className="text-emerald-500 font-black text-xs uppercase bg-emerald-500/10 px-3 py-1 rounded-full">
+                                                            Healthy
+                                                        </span>
+                                                    )}
+                                                </td>
+                                            </tr>
                                         ))}
-                                    </div>
-                                </div>
-
-                                <div className="bg-slate-900 border border-slate-800 rounded-[2.5rem] p-8">
-                                    <h3 className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] mb-4">Neural Log</h3>
-                                    <div className="bg-black/40 p-4 rounded-xl font-mono text-[10px] text-indigo-400 space-y-1">
-                                        <p>&gt; Initializing {data.algorithm || 'Holt-Winters'}...</p>
-                                        <p>&gt; Scanning 400+ Bill Records...</p>
-                                        <p>&gt; Correlation Factor: 0.94...</p>
-                                        <p>&gt; Prediction Loop: Complete</p>
-                                    </div>
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
-                        <div className="bg-slate-900/50 border border-slate-800 rounded-[3rem] p-10 backdrop-blur-xl">
-                            <div className="grid md:grid-cols-3 gap-12">
-                                <div className="flex gap-6">
-                                    <div className="w-12 h-12 min-w-[48px] bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-500 border border-indigo-500/20">
-                                        <FaBrain />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-black text-white italic tracking-tighter uppercase mb-2">Smart Action Items</h4>
-                                        <p className="text-slate-400 text-xs font-bold leading-relaxed">Ensure a 20% buffer stock for high-demand items based on predicted clusters.</p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-6">
-                                    <div className="w-12 h-12 min-w-[48px] bg-emerald-500/10 rounded-2xl flex items-center justify-center text-emerald-500 border border-emerald-500/20">
-                                        <FaMagic />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-black text-white italic tracking-tighter uppercase mb-2">Inventory Boost</h4>
-                                        <p className="text-slate-400 text-xs font-bold leading-relaxed">Stock up on seasonal medicines before the predicted spike in next 10 days.</p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-6">
-                                    <div className="w-12 h-12 min-w-[48px] bg-pink-500/10 rounded-2xl flex items-center justify-center text-pink-500 border border-pink-500/20">
-                                        <FaPlus />
-                                    </div>
-                                    <div>
-                                        <h4 className="font-black text-white italic tracking-tighter uppercase mb-2">Growth Tracker</h4>
-                                        <p className="text-slate-400 text-xs font-bold leading-relaxed">Stable sales trend detected. Optimized reordering schedule initialized.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </>
                 )}
             </main>
@@ -222,4 +205,4 @@ const StockPrediction = () => {
     );
 };
 
-export default StockPrediction;
+export default InventoryIntelligence;

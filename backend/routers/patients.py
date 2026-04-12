@@ -30,7 +30,7 @@ async def add_patient(patient: PatientCreate, current_user: dict = Depends(get_c
 @router.get("", response_model=List[PatientDB])
 async def get_patients(current_user: dict = Depends(get_current_user)):
     try:
-        patients = await patients_collection.find({"user": current_user["id"]}).to_list(100)
+        patients = await patients_collection.find({"user": current_user["id"]}).sort("_id", -1).to_list(100)
         for p in patients:
             p["_id"] = str(p["_id"])
         return patients

@@ -35,9 +35,9 @@ def main():
     
     base_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # 1. Dependency Checks
-    install_deps(os.path.join(base_dir, "backend"), "requirements.txt")
-    install_deps(os.path.join(base_dir, "ai_service"), "requirements.txt")
+    # 1. Dependency Checks (Skipped for faster startup)
+    # install_deps(os.path.join(base_dir, "backend"), "requirements.txt")
+    # install_deps(os.path.join(base_dir, "ai_service"), "requirements.txt")
     
     # 2. Database Connectivity Check (MongoDB)
     print_status("Checking MongoDB Connection...", "INFO")
